@@ -1,9 +1,10 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import React, { useEffect } from 'react';
 import {
   GradientBackground,
   Header,
   NotificationBell,
+  PriceHeader,
   ScrollableRecents,
 } from '../../components';
 import useAuth from '../../state/app-state';
@@ -11,25 +12,40 @@ import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { CryptoBoxes } from '../../components/crypto-boxes/cryptoBoxes';
 
-const HeaderRight = () => {
+const HeaderRight = (props: any) => {
   return (
-    <TouchableOpacity>
-      <Text style={{ fontWeight: '700' }}>TRADE</Text>
+    <TouchableOpacity onPress={props.onPress}>
+      <Text style={{ fontWeight: '700' }}>BATTLE</Text>
     </TouchableOpacity>
   );
 };
 
 export const DashboardScreen = () => {
-  const { setOptions } = useNavigation();
+  const { setOptions, navigate } = useNavigation();
   const isAuth = useAuth(state => state.isAuth);
 
   useEffect(() => {
     setOptions({
       title: 'Dashboard',
       headerLeft: () => <NotificationBell />,
-      headerRight: () => <HeaderRight />,
+      headerRight: () => <HeaderRight onPress={onHeaderRightPress} />,
     });
   }, []);
+
+  const onHeaderRightPress = () => {
+    // @ts-ignore wtf
+    navigate('battle');
+  };
+
+  const _renderItem = ({ item, index }: any) => {
+    return (
+      <View style={{ backgroundColor: 'red', flexDirection: 'row' }}>
+        <Text>G</Text>
+        <Text>Clock</Text>
+        <Text>G</Text>
+      </View>
+    );
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -38,9 +54,28 @@ export const DashboardScreen = () => {
         text="friends"
         containerStyle={{ marginTop: 10, height: 36 }}
       />
-      <Text>You have made $1,038,039</Text>
+      <PriceHeader
+        balance={14102.1}
+        subBalance={'+73% all time'}
+        containerStyle={{ marginTop: 20, paddingLeft: 8 }}
+      />
       <CryptoBoxes />
-      <Text>Your Ongoing Battles</Text>
+
+      <Text style={styles.balanceText}>battles</Text>
+      <FlatList
+        data={[1, 2, 3]}
+        renderItem={_renderItem}
+        contentContainerStyle={{ paddingHorizontal: 8 }}
+        ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+      />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  balanceText: {
+    fontWeight: 'bold',
+    fontSize: 22,
+    marginLeft: 6,
+  },
+});

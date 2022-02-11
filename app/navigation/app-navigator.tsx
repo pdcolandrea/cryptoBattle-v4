@@ -37,7 +37,11 @@ const BattleRoot = createNativeStackNavigator();
 const BattleStack = () => {
   return (
     <BattleRoot.Navigator>
-      <BattleRoot.Screen name="battleScreen" component={BattleScreen} />
+      <BattleRoot.Screen
+        name="battleScreen"
+        component={BattleScreen}
+        options={{ headerShown: true }}
+      />
     </BattleRoot.Navigator>
   );
 };

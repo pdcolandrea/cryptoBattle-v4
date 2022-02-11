@@ -1,5 +1,5 @@
 import React from 'react';
-import { useColorScheme } from 'react-native';
+import { useColorScheme, LogBox } from 'react-native';
 import {
   DarkTheme,
   DefaultTheme,
@@ -16,6 +16,10 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const colorScheme = useColorScheme();
+  LogBox.ignoreLogs([
+    "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
+    'RCTBridge required dispatch_sync to load RNGestureHandlerModule. This may lead to deadlocks',
+  ]);
 
   return (
     <QueryClientProvider client={queryClient}>

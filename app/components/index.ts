@@ -4,3 +4,4 @@ export * from './header/notificationBell';
 export * from './scroll-recents/scrollableRecents';
 export * from './crypto-boxes/cryptoBoxes';
 export * from './percentage/percentageText';
+export * from './price-text/PriceHeader';

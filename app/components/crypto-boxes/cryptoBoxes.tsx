@@ -9,10 +9,12 @@ import {
   Text,
   Animated,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { Percentage } from '../';
 import { LineChart } from 'react-native-wagmi-charts';
+const btcImage = require('../../../node_modules/cryptocurrency-icons/128/color/btc.png');
 
 const styles = StyleSheet.create({
   balanceText: {
@@ -45,7 +47,6 @@ export function CryptoBoxes(props: CryptoBoxesProps) {
     <View
       style={{
         height: 220,
-        marginTop: 10,
       }}
     >
       <FlatList
@@ -141,7 +142,8 @@ const CryptoBox = (props: any) => {
     <TouchableOpacity onPress={handleBoxClick} style={{ alignSelf: 'center' }}>
       <Animated.View
         style={{
-          height: 180,
+          opacity: 0.8,
+          height: 190,
           width: animatedWidth,
           backgroundColor: '#fafafa',
           borderRadius: 8,
@@ -160,15 +162,31 @@ const CryptoBox = (props: any) => {
         <View
           style={{ paddingHorizontal: 15, paddingTop: 15, paddingBottom: 5 }}
         >
-          <Text>bitcoin</Text>
-          <Text>
-            <Text style={styles.cryptoBalance}>19.3</Text>{' '}
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginBottom: 5,
+            }}
+          >
+            <Image
+              source={btcImage}
+              style={{ width: 26, height: 26, marginRight: 5 }}
+            />
+            <Text
+              style={{ fontWeight: 'bold', fontSize: 18, color: '#162548' }}
+            >
+              Bitcoin
+            </Text>
+          </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <Text style={styles.cryptoBalance}>19.3 </Text>
             <Text style={styles.cryptoCurr}>BTC</Text>
-          </Text>
-          <Percentage change={-4} />
+          </View>
+          <Percentage change={-4.23} />
         </View>
         <LineChart.Provider data={props.data.index == 1 ? data2 : data}>
-          <LineChart height={90} width={widthState}>
+          <LineChart height={85} width={widthState}>
             <LineChart.Path
               color={props.data.index == 1 ? 'green' : 'red'}
               animationDuration={10}
@@ -177,6 +195,14 @@ const CryptoBox = (props: any) => {
             </LineChart.Path>
           </LineChart>
         </LineChart.Provider>
+        <View
+          style={{
+            marginHorizontal: 15,
+            alignSelf: 'center',
+          }}
+        >
+          <Text>15 hours ago</Text>
+        </View>
       </Animated.View>
     </TouchableOpacity>
   );
